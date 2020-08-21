@@ -12,7 +12,7 @@ Prerequisites
 -------------
 The implementation uses [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/guide/install.html). Note: You will need to install the OpenMPI version to use ``GAIL``, ``TRPO`` algorithms. Please include the 'utils' folder from [here](https://github.com/araffin/rl-baselines-zoo) in your cloned Stable Baselines repo
 
-For AirSim: Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) your own binary files and modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my Thesis can be found [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing)
+AirSim: Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) your own binary files and modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my Thesis can be found [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing)
 
 ```
 # create virtual environment (optional)
