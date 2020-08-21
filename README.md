@@ -2,7 +2,7 @@ Masters-Thesis
 ==========================
 **Codebase:** Basic implementation of Imitation Learning (GAIL) using algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html)
 
-**Framework:** Tensorflow 1.14, **Langauge:** Python 3.7
+**Framework, langauge:** Tensorflow 1.14, Python 3.7
 
 **Idea**: pick {env, algo} -> train RL (optimal policy) -> generate expert data (optimal expert) -> train GAIL (policy)
 
