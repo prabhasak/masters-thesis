@@ -15,15 +15,15 @@ The implementation uses [Stable Baselines 2.10](https://stable-baselines.readthe
 For AirSim: Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) your own binary files and modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my Thesis can be found [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing)
 
 ```
-#create virtual environment (optional)
+# create virtual environment (optional)
 conda create -n myenv python==3.7
 conda activate myenv
 
 git clone https://github.com/prabhasak/masters-thesis.git
 
-#install required libraries and modules (recommended)
+# install required libraries and modules (recommended)
 pip install -r requirements.txt
-#MPI needed for TRPO, GAIL
+# MPI needed for TRPO, GAIL
 pip install stable-baselines[mpi]
 ```
 
