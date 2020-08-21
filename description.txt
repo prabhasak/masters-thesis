@@ -1,0 +1,20 @@
+BASIC IMITATION LEARNING IMPLEMENTATION FROM STABLE BASELINES
+
+
+airsim_env: The AirSim-v0 OpenAI Gym env (install instructions at https://pypi.org/project/airsim/ and https://microsoft.github.io/AirSim/build_windows/)
+Location - same as imitation_learning_basic.py
+
+
+binaries: The AirSim binaries for AirSim-v0 (Windows, Linux). "Blocks.exe" must be open and needs to be detected for training AirSim-v0 (to access more Binary options, modify Documents/AirSim/settings.json accordingly. Description at https://microsoft.github.io/AirSim/settings/)
+
+
+expert: collection of .npz files. Note: AirSim-v0 expert data (generated from an optimal SAC policy). 1 -> simple reward, 2 -> complex reward (check __init__ of airsim_env_0.py in airsim_env for more info)
+
+
+logs: log files for airsim experiments (check __init__ of airsim_env_0.py in airsim_env for more info)
+
+
+models: collection of all trained RL and GAIL models
+
+
+stable_baselines: The Stable Baselines 2.10 repo (includes 'utils' from Baselines Zoo)
