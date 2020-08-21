@@ -1,10 +1,10 @@
 Masters-Thesis: Learning from demonstrations
 ==========================
-**Codebase:** Benchmark reinforcement learning (RL) and imitation Learning (GAIL) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/), and [AirSim](https://microsoft.github.io/AirSim/) environments
+**Codebase:** Benchmark reinforcement learning (RL) and imitation Learning (GAIL) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/) and [AirSim](https://microsoft.github.io/AirSim/) environments
 
 **Framework, langauge, OS:** Tensorflow 1.14, Python 3.7, Windows 10
 
-**Idea**: pick {env, algo} -> train RL (optimal policy) -> generate expert data (optimal expert) -> train GAIL (policy)
+**Idea**: pick {env, algo} pair -> train RL (optimal policy) -> generate expert data (optimal expert) -> train GAIL (policy)
 
 **Thesis:** Autonomous UAV landing using human demonstrations alone (expert). Apply imitation learning methods on a custom environment built on [Microsoft AirSim 2.0](https://microsoft.github.io/AirSim/). Short video [here](https://www.youtube.com/watch?v=oj4y8GOq4gk&feature=youtu.be)
 
