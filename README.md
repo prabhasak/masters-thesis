@@ -12,7 +12,7 @@ Prerequisites
 -------------
 The implementation uses [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/guide/install.html). Note: You will need to install the OpenMPI version to use ``GAIL``, ``TRPO`` algorithms. Please include the 'utils' folder from [here](https://github.com/araffin/rl-baselines-zoo) in your cloned Stable Baselines repo
 
-AirSim: Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) your own binary files and modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my Thesis can be found [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing)
+AirSim: Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) custom binary files, modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my thesis available [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing)
 
 ```
 # create virtual environment (optional)
@@ -29,13 +29,10 @@ pip install stable-baselines[mpi]
 
 Usage
 -------------
-Add your CustomEnv ID to ``env_list``, reward to ``env_success``, and your custom RL/IL algorithm to ``algo_list``
-
-Note: You can generate a CustomEnv ID by registering it on Gym. You can use the "airsim_env" folder above as reference
+Add your CustomEnv ID to ``env_list``, reward to ``env_success``, and your custom RL/IL algorithm to ``algo_list`` (You can generate a CustomEnv ID by [registering](https://medium.com/@apoddar573/making-your-own-custom-environment-in-gym-c3b65ff8cdaa) your CustomEnv on Gym. You can use the ``"airsim_env"`` folder above as reference)
 
 **OpenAI Gym envs:** ``python imitation_learning_basic.py --env Pendulum-v0 --algo sac --seed 42 -rl -trl 3e5 -il -til 3e5 -params-RL gamma:0.995 timesteps_per_batch: 2048`` (exclude ``-rl`` if expert data is available)
 
 **AirSim env:** ``python imitation_learning_basic.py --env AirSim-v0 --algo sac --exp-id 1 --seed 42 -rl -trl 4e5 -il -til 1e6 -params-IL gamma:0.995`` (run this after opening binaries/Windows/Blocks.exe or binaries/Linux/Blocks.sh)
-
 
 Tuned hyperparameters are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for more info on the sub-folders
