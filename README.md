@@ -1,4 +1,4 @@
-Masters-Thesis
+Masters-Thesis: Learning from demonstrations
 ==========================
 **Codebase:** Benchmark reinforcement learning (RL) and imitation Learning (GAIL) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/), and [AirSim](https://microsoft.github.io/AirSim/) environments
 
