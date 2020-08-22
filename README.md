@@ -24,7 +24,7 @@ pip install -r requirements.txt #recommended
 pip install stable-baselines[mpi] #MPI needed for TRPO, GAIL
 ```
 
-[Register](https://medium.com/@apoddar573/making-your-own-custom-environment-in-gym-c3b65ff8cdaa) your CustomEnv on Gym ([examples](https://github.com/openai/gym/blob/master/gym/envs/__init__.py)), and add your custom env, RL/IL algorithm details to the code You can use the ``"airsim_env"`` folder for reference
+[Register](https://medium.com/@apoddar573/making-your-own-custom-environment-in-gym-c3b65ff8cdaa) your CustomEnv on Gym ([examples](https://github.com/openai/gym/blob/master/gym/envs/__init__.py)), and add your custom env, RL/IL algorithm details to the code. You can use the ``"airsim_env"`` folder for reference
 
 AirSim: Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) custom binary files, modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my thesis available [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing). You will have to run them _before_ running the code.
 
@@ -36,6 +36,9 @@ Usage
 **Verify reproducibility:** (i) 71/100 successful experts with (mean, std) = (-145.37, 80.41) or (-150.43, 82.06), and 
 ii) 43/100 successful episodes on GAIL policy evaluation with (mean, std) = (-227.61, 147.36) or (-200.78, 109.21)
 
+Exclude ``-rl`` if expert data is available. For [deterministic evaluation](https://github.com/hill-a/stable-baselines/issues/929#issuecomment-655319112) of expert data, add ``deterministic=True`` [here](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L120). Tuned hyperparameters (HPs) are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for info on sub-folders
+
+<!-- To hide expert data info (keys, shape), you will have to comment [this](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L173) out -->
 
 Features
 -------------
@@ -43,17 +46,12 @@ The codebase contains **[Tensorboard](https://stable-baselines.readthedocs.io/en
 1. [Saving](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html#checkpointcallback) the model periodically (useful for [continual learning](https://stable-baselines.readthedocs.io/en/master/guide/examples.html#continual-learning) and to resume training)
 2. [Evaluating](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html#evalcallback) the model periodically and saves the best model throughout training (you can choose to save and evaluate just the best model with ``-best``)
 
-Exclude ``-rl`` if expert data is available. For [deterministic evaluation](https://github.com/hill-a/stable-baselines/issues/929#issuecomment-655319112) of expert data, add ``deterministic=True`` [here](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L120). Tuned hyperparameters (HPs) are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for info on sub-folders
-
-<!-- To hide expert data info (keys, shape), you will have to comment [this](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L173) out -->
-
-
 Future Work
 -------------
 1. [Multiprocessing](https://stable-baselines.readthedocs.io/en/master/guide/vec_envs.html#subprocvecenv): speed up training (observed 6x speedup for CartPole-v0 on my CPU with 12 threads)
-2. [HP tuning](https://stable-baselines.readthedocs.io/en/master/guide/rl_zoo.html): find the best set of hyperparameters for an (environment-algorithm) pair
-3. [VecNormalize](https://stable-baselines.readthedocs.io/en/master/guide/vec_envs.html#vecnormalize): normalize data (useful for MuJoCo environments)
-4. [Monitor](https://stable-baselines.readthedocs.io/en/master/common/monitor.html): record more internal state information
+2. [HP tuning](https://stable-baselines.readthedocs.io/en/master/guide/rl_zoo.html): find the best set of hyperparameters for an [env, algo] pair
+3. [VecNormalize](https://stable-baselines.readthedocs.io/en/master/guide/vec_envs.html#vecnormalize): normalize env observation, action spaces (useful for MuJoCo environments)
+4. [Monitor](https://stable-baselines.readthedocs.io/en/master/common/monitor.html): record internal state information during training (episode length, rewards)
 5. (i) Comparing consecutive runs of the experiment, and (ii) passing arguments, HPs to custom environments
 
-I hope to release a separate repo for all of this once my reasearch is done!
+I hope to release a separate repo for this once my reasearch is done!
