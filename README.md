@@ -1,12 +1,12 @@
-Learning from demonstrations: A case study
+Learning from demonstrations: An Imitation Learning benchmark
 ==========================
-**Codebase:** Benchmark reinforcement learning (RL) and imitation Learning (GAIL) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/) and [AirSim](https://microsoft.github.io/AirSim/) environments
+**Codebase:** Benchmark reinforcement learning (RL) and imitation Learning ([GAIL](https://arxiv.org/pdf/1606.03476.pdf)) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/) and [AirSim](https://microsoft.github.io/AirSim/) environments
 
 **Framework, langauge, OS:** Tensorflow 1.14, Python 3.7, Windows 10
 
 **Motivation:** This is a humble attempt at combining all (or most) of the cool features provided by Stable Baselines!
 
-**Idea**: Pick [env, algo] pair **->** <ins>train RL</ins> (optimal policy) **->** generate <ins>expert data</ins> (optimal expert) **->** <ins>train GAIL</ins> (policy)
+**Idea**: Pick your favorite [env, algo] pair **->** train RL **->** generate expert data **->** train GAIL
 
 **Thesis:** Autonomous UAV landing using human demonstrations alone (expert). Apply imitation learning methods on a custom environment built on [Microsoft AirSim 2.0](https://microsoft.github.io/AirSim/). Short video [here](https://www.youtube.com/watch?v=oj4y8GOq4gk&feature=youtu.be)
 
