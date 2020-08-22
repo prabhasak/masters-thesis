@@ -39,10 +39,11 @@ The codebase contains **[Tensorboard](https://stable-baselines.readthedocs.io/en
 1. [Saving](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html#checkpointcallback) the model periodically (useful for [continual learning](https://stable-baselines.readthedocs.io/en/master/guide/examples.html#continual-learning) and to resume training)
 2. [Evaluating](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html#evalcallback) the model periodically and saves the best model throughout training (you can choose to save and evaluate just the best model with ``-best``)
 
-**OpenAI Gym envs:** ``python imitation_learning_basic.py --seed 42 --env Pendulum-v0 --algo sac -rl -trl 1e5 -il -til 3e5 -best -check -eval -tb -params-RL learning_starts:1000 -params-IL lam:0.9 vf_iters:10`` (Exclude ``-rl`` if expert data is available. Also, ``--device`` assumes single-GPU machine)
+**``python imitation_learning_basic.py --seed 42 --env Pendulum-v0 --algo sac -rl -trl 1e5 -il -til 3e5 -best -check -eval -tb -params-RL learning_starts:1000 -params-IL lam:0.9 vf_iters:10``**
+Exclude ``-rl`` if expert data is available. Also, ``--device`` assumes single-GPU machine
 
-**Verify reproducibility:** (i) 71/100 successful experts with mean(-145.37/-150.43), std(80.41/82.06), and 
-ii) 43/100 successful episodes on GAIL policy evaluation with mean(-227.61/-200.78), std(147.36/109.21)
+**Verify reproducibility:** (i) 71/100 successful experts with (mean, std) = (-145.37, 80.41) or (-150.43, 82.06), and 
+ii) 43/100 successful episodes on GAIL policy evaluation with (mean, std) = (-227.61, 147.36) or (-200.78, 109.21)
 
 Tuned hyperparameters (HPs) are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for info on sub-folders
 
@@ -51,10 +52,10 @@ Note: For [deterministic evaluation](https://github.com/hill-a/stable-baselines/
 
 Future Work
 -------------
-1. [Multiprocessing](https://stable-baselines.readthedocs.io/en/master/guide/vec_envs.html#subprocvecenv): to speed up training (observed 6x speedup on my PC)
-2. [HP tuning](https://stable-baselines.readthedocs.io/en/master/guide/rl_zoo.html): to find the best set of hyperparameters for an (environment-algorithm) pair
-3. [VecNormalize](https://stable-baselines.readthedocs.io/en/master/guide/vec_envs.html#vecnormalize): for normalizing data (useful for MuJoCo environments)
-4. [Monitor](https://stable-baselines.readthedocs.io/en/master/common/monitor.html): for recording more internal state information
-5. (i) Comparing consecutive runs of the experiment and picking the best model (ii) Loading tuned HPs and passing arguments to custom environments
+1. [Multiprocessing](https://stable-baselines.readthedocs.io/en/master/guide/vec_envs.html#subprocvecenv): speed up training (observed 6x speedup for CartPole-v0 on my CPU with 12 threads)
+2. [HP tuning](https://stable-baselines.readthedocs.io/en/master/guide/rl_zoo.html): find the best set of hyperparameters for an (environment-algorithm) pair
+3. [VecNormalize](https://stable-baselines.readthedocs.io/en/master/guide/vec_envs.html#vecnormalize): normalize data (useful for MuJoCo environments)
+4. [Monitor](https://stable-baselines.readthedocs.io/en/master/common/monitor.html): record more internal state information
+5. (i) Comparing consecutive runs of the experiment, and (ii) passing arguments, HPs to custom environments
 
-I plan to release a separate repo for all of this once my reasearch is done!
+I hope to release a separate repo for all of this once my reasearch is done!
