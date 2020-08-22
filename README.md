@@ -6,7 +6,7 @@ Masters-Thesis: Learning from demonstrations
 
 **Motivation:** This is a humble attempt at combining all (or most) of the cool features provided by Stable Baselines!
 
-**Idea**: Pick <ins>{env, algo}</ins> pair -> <ins>train RL</ins> (optimal policy) -> generate <ins>expert data</ins> (optimal expert) -> <ins>train GAIL</ins> (policy)
+**Idea**: Pick [env, algo] pair **->** <ins>train RL</ins> (optimal policy) **->** generate <ins>expert data</ins> (optimal expert) **->** <ins>train GAIL</ins> (policy)
 
 **Thesis:** Autonomous UAV landing using human demonstrations alone (expert). Apply imitation learning methods on a custom environment built on [Microsoft AirSim 2.0](https://microsoft.github.io/AirSim/). Short video [here](https://www.youtube.com/watch?v=oj4y8GOq4gk&feature=youtu.be)
 
@@ -34,10 +34,9 @@ Usage
 ``python imitation_learning_basic.py --seed 42 --env Pendulum-v0 --algo sac -rl -trl 1e5 -il -til 3e5 -best -check -eval -tb -params-RL learning_starts:1000 -params-IL lam:0.9 vf_iters:10``s
 
 **Verify reproducibility:** (i) 71/100 successful experts with (mean, std) = (-145.37, 80.41) or (-150.43, 82.06), and 
-
 ii) 43/100 successful episodes on GAIL policy evaluation with (mean, std) = (-227.61, 147.36) or (-200.78, 109.21)
 
-The codebase contains **[Tensorboard](https://stable-baselines.readthedocs.io/en/master/guide/tensorboard.html)** and **[Callback](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html)** features, which help monitor performance during training. You can enable them with ``-tb`` and ``-check, -eval`` respectively. TB: ``tensorboard --logdir "/your/path"``. Callbacks are for:
+The codebase contains **[Tensorboard](https://stable-baselines.readthedocs.io/en/master/guide/tensorboard.html)** and **[Callback](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html)** features, which help monitor performance during training. You can enable them with ``-tb`` and ``-check,-eval`` respectively. TB: ``tensorboard --logdir "/your/path"``. Callbacks are for:
 1. [Saving](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html#checkpointcallback) the model periodically (useful for [continual learning](https://stable-baselines.readthedocs.io/en/master/guide/examples.html#continual-learning) and to resume training)
 2. [Evaluating](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html#evalcallback) the model periodically and saves the best model throughout training (you can choose to save and evaluate just the best model with ``-best``)
 
