@@ -1,7 +1,7 @@
 Learning from demonstrations: An Imitation Learning benchmark
 ==========================
-**Objective:** Benchmark reinforcement learning (RL) and imitation Learning ([GAIL](https://arxiv.org/pdf/1606.03476.pdf)) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/) and [AirSim](https://microsoft.github.io/AirSim/) environments\
-1. Train a GAIL model to <ins>imitate</ins> expert demonstrations <ins>generated</ins> using a trained RL model\
+**Objective:** Benchmark reinforcement learning (RL) and imitation Learning ([GAIL](https://arxiv.org/pdf/1606.03476.pdf)) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/) and [AirSim](https://microsoft.github.io/AirSim/) environments
+1. Train a GAIL model to <ins>imitate</ins> expert demonstrations <ins>generated</ins> using a trained RL model
 2. Integrate several cool features provided by Stable Baselines (to the best of my knowledge, uncharted territory!)
 
 **Idea**: Pick your favourite [env, algo] pair -> **train RL** -> **generate expert data** -> **train GAIL**
