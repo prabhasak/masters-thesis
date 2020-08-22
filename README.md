@@ -6,7 +6,7 @@ Learning from demonstrations: An Imitation Learning benchmark
 
 **Motivation:** This is a humble attempt at combining all (or most) of the cool features provided by Stable Baselines!
 
-**Idea**: Pick your favorite [env, algo] pair **->** train RL **->** generate expert data **->** train GAIL
+**Idea**: Pick your favourite [env, algo] pair -> **train RL** -> **generate expert data** -> **train GAIL**
 
 **Thesis:** Autonomous UAV landing using human demonstrations alone (expert). Apply imitation learning methods on a custom environment built on [Microsoft AirSim 2.0](https://microsoft.github.io/AirSim/). Short video [here](https://www.youtube.com/watch?v=oj4y8GOq4gk&feature=youtu.be)
 
