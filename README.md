@@ -1,4 +1,4 @@
-Masters-Thesis: Learning from demonstrations
+Learning from demonstrations: A case study
 ==========================
 **Codebase:** Benchmark reinforcement learning (RL) and imitation Learning (GAIL) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/) and [AirSim](https://microsoft.github.io/AirSim/) environments
 
@@ -37,7 +37,7 @@ Usage
 ii) 43/100 successful episodes on GAIL policy evaluation with (mean, std) = (-227.61, 147.36) or (-200.78, 109.21)
 
 
-Fatures
+Features
 -------------
 The codebase contains **[Tensorboard](https://stable-baselines.readthedocs.io/en/master/guide/tensorboard.html)** and **[Callback](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html)** features, which help monitor performance during training. You can enable them with ``-tb`` and ``-check,-eval`` respectively. TB: ``tensorboard --logdir "/your/path"``. Callbacks are for:
 1. [Saving](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html#checkpointcallback) the model periodically (useful for [continual learning](https://stable-baselines.readthedocs.io/en/master/guide/examples.html#continual-learning) and to resume training)
@@ -46,6 +46,7 @@ The codebase contains **[Tensorboard](https://stable-baselines.readthedocs.io/en
 Exclude ``-rl`` if expert data is available. For [deterministic evaluation](https://github.com/hill-a/stable-baselines/issues/929#issuecomment-655319112) of expert data, add ``deterministic=True`` [here](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L120). Tuned hyperparameters (HPs) are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for info on sub-folders
 
 <!-- To hide expert data info (keys, shape), you will have to comment [this](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L173) out -->
+
 
 Future Work
 -------------
