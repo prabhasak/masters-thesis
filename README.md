@@ -1,16 +1,14 @@
 Learning from demonstrations: An Imitation Learning benchmark
 ==========================
-**Objective:**
-1. Train a GAIL model to <ins>imitate</ins> expert demonstrations <ins>generated</ins> using a trained RL model\\
-2. Integrate several cool features provided by Stable Baselines which, to the best of my knowledge, is uncharted territory!
-
-**Codebase:** Benchmark reinforcement learning (RL) and imitation Learning ([GAIL](https://arxiv.org/pdf/1606.03476.pdf)) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/) and [AirSim](https://microsoft.github.io/AirSim/) environments
-
-**Framework, langauge, OS:** Tensorflow 1.14, Python 3.7, Windows 10
+**Objective:** Benchmark reinforcement learning (RL) and imitation Learning ([GAIL](https://arxiv.org/pdf/1606.03476.pdf)) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/) and [AirSim](https://microsoft.github.io/AirSim/) environments\
+1. Train a GAIL model to <ins>imitate</ins> expert demonstrations <ins>generated</ins> using a trained RL model\
+2. Integrate several cool features provided by Stable Baselines (to the best of my knowledge, uncharted territory!)
 
 **Idea**: Pick your favourite [env, algo] pair -> **train RL** -> **generate expert data** -> **train GAIL**
 
-**Thesis:** Autonomous UAV landing using human demonstrations alone (expert). Apply imitation learning methods on a custom environment built on [Microsoft AirSim 2.0](https://microsoft.github.io/AirSim/). Short video [here](https://www.youtube.com/watch?v=oj4y8GOq4gk&feature=youtu.be)
+**Framework, langauge, OS:** Tensorflow 1.14, Python 3.7, Windows 10
+
+**Thesis problem statement:** Imitate Autonomous UAV landing using human demonstrations alone. Train GAIL on a custom environment built on [Microsoft AirSim 2.0](https://microsoft.github.io/AirSim/). Short video [here](https://www.youtube.com/watch?v=oj4y8GOq4gk&feature=youtu.be)
 
 Prerequisites
 -------------
