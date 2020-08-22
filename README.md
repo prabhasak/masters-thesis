@@ -4,7 +4,7 @@ Learning from demonstrations: An Imitation Learning benchmark
 
 **Framework, langauge, OS:** Tensorflow 1.14, Python 3.7, Windows 10
 
-**Motivation:** This is a humble attempt at combining all (or most) of the cool features provided by Stable Baselines!
+**Motivation:** Train a GAIL model to imitate expert demonstrations generated using a trained RL model. This is also an attempt to integrate all (or most) of the cool features provided by Stable Baselines which, to the best of my knowledge, is uncharted territory!
 
 **Idea**: Pick your favourite [env, algo] pair -> **train RL** -> **generate expert data** -> **train GAIL**
 
