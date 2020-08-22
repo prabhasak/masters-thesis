@@ -8,7 +8,10 @@ Location - same as imitation_learning_basic.py
 binaries: The AirSim binaries for AirSim-v0 (Windows, Linux). "Blocks.exe" must be open and needs to be detected for training AirSim-v0 (to access more Binary options, modify Documents/AirSim/settings.json accordingly. Description at https://microsoft.github.io/AirSim/settings/)
 
 
-expert: collection of .npz files. Note: AirSim-v0 expert data (generated from an optimal SAC policy). 1 -> simple reward, 2 -> complex reward (check __init__ of airsim_env_0.py in airsim_env for more info)
+callbacks: save model periodically (checkpoints) and evaluate model periodically (evalautions)
+
+
+experts: collection of .npz files. Note: AirSim-v0 expert data (generated from an optimal SAC policy). 1 -> 'simple' reward, 2 -> 'complex' reward (check __init__ of airsim_env_0.py in airsim_env for more info)
 
 
 logs: log files for airsim experiments (check __init__ of airsim_env_0.py in airsim_env for more info)
@@ -17,4 +20,10 @@ logs: log files for airsim experiments (check __init__ of airsim_env_0.py in air
 models: collection of all trained RL and GAIL models
 
 
-stable_baselines: The Stable Baselines 2.10 repo (includes 'utils' from Baselines Zoo)
+stable_baselines: The "stable_baselines" folder from the Stable Baselines 2.10 repo
+
+
+tensorboard: Tensorboard logs according to env_id. Multiple runs of an experiment will result in multiple logs, please make sure to keep track of the runs (exp_id helps)
+
+
+utils.py: to store the cmd line hyperparameters as a Dict
