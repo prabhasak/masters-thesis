@@ -12,21 +12,22 @@ Learning from demonstrations: An Imitation Learning benchmark
 
 Prerequisites
 -------------
-The implementation uses [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/guide/install.html). Inlcuded 'utils' from [here](https://github.com/araffin/rl-baselines-zoo) to save the hyperparameters as a dictionary
+The implementation uses [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/guide/install.html). Inlcuded 'utils.py' from [here](https://github.com/araffin/rl-baselines-zoo) to save the hyperparameters as a dictionary
 
 ```
 # create virtual environment (optional)
-conda create -n myenv python==3.7
+conda create -n myenv python=3.7
 conda activate myenv
 
 git clone https://github.com/prabhasak/masters-thesis.git
-pip install -r requirements.txt #recommended
-pip install stable-baselines[mpi] #MPI needed for TRPO, GAIL
+cd masters-thesis
+pip install -r requirements.txt # recommended
+pip install stable-baselines[mpi] # MPI needed for TRPO, GAIL
 ```
 
-[Register](https://medium.com/@apoddar573/making-your-own-custom-environment-in-gym-c3b65ff8cdaa) your CustomEnv on Gym ([examples](https://github.com/openai/gym/blob/master/gym/envs/__init__.py)), and add your custom env, RL/IL algorithm details to the code. You can use the ``"airsim_env"`` folder for reference
+**For CustomEnvs:** [Register](https://medium.com/@apoddar573/making-your-own-custom-environment-in-gym-c3b65ff8cdaa) your CustomEnv on Gym ([examples](https://github.com/openai/gym/blob/master/gym/envs/__init__.py)), and add your custom env and/or algorithm details to the code. You can use the ``"airsim_env"`` folder for reference
 
-AirSim: Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) custom binary files, modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my thesis available [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing). You will have to run them _before_ running the code.
+**AirSim:** Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) custom binary files, modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my thesis available [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing). You will have to run them _before_ running the code
 
 
 Usage
@@ -54,4 +55,4 @@ Future Work
 4. [Monitor](https://stable-baselines.readthedocs.io/en/master/common/monitor.html): record internal state information during training (episode length, rewards)
 5. (i) Comparing consecutive runs of the experiment, and (ii) passing arguments, HPs to custom environments
 
-I hope to release a separate repo for this once my reasearch is done!
+This is a work in progress (available [here](https://github.com/prabhasak/reproducibility)), but I hope to release clean code for this once my reasearch is done!
