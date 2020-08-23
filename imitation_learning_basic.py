@@ -10,6 +10,12 @@ Author: Prabhasa Kalkur
 - Note 2: Things you can add on top: Multiprocessing, Monitor, VecNormalize, HP tuning, pass CustomEnv kwargs
 """
 
+try:
+    import mpi4py
+    from mpi4py import MPI
+except ImportError:
+    mpi4py = None
+    
 import os
 import sys
 import gym
@@ -21,7 +27,7 @@ import tensorflow as tf
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 #Install Stable Baselines 2.10 (https://stable-baselines.readthedocs.io/en/master/guide/install.html)
-from stable_baselines import GAIL, TRPO, SAC, DQN, PPO2, A2C, DDPG, ACER, ACKTR, HER, TD3
+from stable_baselines import GAIL, TRPO, SAC, DQN, PPO1, A2C, DDPG, ACER, ACKTR, HER, TD3
 from stable_baselines.common.callbacks import CheckpointCallback, EvalCallback
 from stable_baselines.gail import ExpertDataset, generate_expert_traj
 from stable_baselines.common.evaluation import evaluate_policy
@@ -34,7 +40,7 @@ from shutil import copy
 from airsim_env.envs.airsim_env_0 import AirSim
 
 # Add your coustom env and algo details here. Reference: https://github.com/openai/gym/blob/master/gym/envs/__init__.py
-algo_list = {'sac': SAC, 'trpo': TRPO, 'gail': GAIL, 'dqn': DQN, 'ppo2': PPO2,
+algo_list = {'sac': SAC, 'trpo': TRPO, 'gail': GAIL, 'dqn': DQN, 'ppo1': PPO1,
             'ddpg': DDPG, 'a2c': A2C, 'acktr': ACKTR, 'her': HER, 'td3': TD3}
 env_list = ['Pendulum-v0', 'CartPole-v1', 'LunarLander-v2', 'LunarLanderContinuous-v2', 'MountainCarContinuous-v0', 'BipedalWalker-v3',
             'HalfCheetah-v2', 'Hopper-v2', 'Humanoid-v2', 'Ant-v2', 'Reacher-v2', 'Swimmer-v2', 'AirSim-v0'] # mujoco envs need license
