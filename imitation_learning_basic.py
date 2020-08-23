@@ -1,11 +1,12 @@
 """Benchmark reinforcement learning (RL) and imitation Learning (GAIL) algorithms from Stable Baselines 2.10.
 Author: Prabhasa Kalkur
 
-- Note 1.1: choose {env, RL algo, training times, hyperparameters, } as cmd line arguments
+- Note 1.0: choose {env, RL algo, training times, hyperparameters, } as cmd line arguments
+- Note 1.1: please choose appropriate policy for the RL/IL algorithms (line 151, 152)       
 - Note 1.2: changeable numbers in the program:
-            number of episodes used for policy evaluation after training = 100 (line 146)
-            callback model saving and evaluation = every 100, 300 episodes for RL, IL (168, 205)
-            number of expert trajectories generated & used = 100, 10 (line 186, 195)
+            number of episodes used for policy evaluation after training = 100 (line 153)
+            number of expert trajectories generated & used = 100, 10 (line 153)
+            callback model saving and evaluation = every 100, 300 episodes for RL, IL (174, 205)
 - Note 2: Things you can add on top: Multiprocessing, Monitor, VecNormalize, HP tuning, pass CustomEnv kwargs
 """
 
@@ -34,7 +35,7 @@ from airsim_env.envs.airsim_env_0 import AirSim
 
 # Add your coustom env and algo details here. Reference: https://github.com/openai/gym/blob/master/gym/envs/__init__.py
 algo_list = {'sac': SAC, 'trpo': TRPO, 'gail': GAIL, 'dqn': DQN, 'ppo2': PPO2,
-            'ddpg': DDPG, 'acer': ACER, 'acktr': ACKTR, 'her': HER, 'td3': TD3}
+            'ddpg': DDPG, 'a2c': A2C, 'acktr': ACKTR, 'her': HER, 'td3': TD3}
 env_list = ['Pendulum-v0', 'CartPole-v1', 'LunarLander-v2', 'LunarLanderContinuous-v2', 'MountainCarContinuous-v0', 'BipedalWalker-v3',
             'HalfCheetah-v2', 'Hopper-v2', 'Humanoid-v2', 'Ant-v2', 'Reacher-v2', 'Swimmer-v2', 'AirSim-v0'] # mujoco envs need license
 env_success = [-200, 475, 200, 200, 90, 300, 4800, 3000, 1000, 6000, 3.75, 360, 1000] # OpenAI Gym requirements (Hopper should be 3800)
@@ -47,6 +48,7 @@ def get_args():
     parser.add_argument('--env', help='environment ID', type=str, default='CartPole-v1', choices=env_list)
     parser.add_argument('--algo', help='RL Algorithm', default='trpo', type=str, required=False, choices=list(algo_list.keys()))
     parser.add_argument('--exp-id', help='Experiment ID', default=0, type=int)
+    parser.add_argument('--verbose', help='Verbose mode (0: no output, 1: INFO)', default=0, type=int)
 
     parser.add_argument('-rl', '--train-RL', help='To train RL', action='store_true')
     parser.add_argument('-trl', '--timesteps-RL', help='Number of timesteps for RL', default="1e5", type=str)
@@ -62,9 +64,9 @@ def get_args():
     args = parser.parse_args()
     return args
 
-def train(mode, save_best_model, folder, env, algo, policy, seed, timesteps, callback = None, tensorboard_log=None, hyperparams=None, dataset=None):
+def train(mode, save_best_model, folder, env, algo, policy, seed, timesteps, verbose=0, callback = None, tensorboard_log=None, hyperparams=None, dataset=None):
     if mode=='RL':
-        model = (algo_list[algo])(policy=policy, env=env, seed=seed, n_cpu_tf_sess=1, tensorboard_log=tensorboard_log, **hyperparams) #n_cpu_tf_sess=1 for deterministic CPU results
+        model = (algo_list[algo])(policy=policy, env=env, seed=seed, n_cpu_tf_sess=1, tensorboard_log=tensorboard_log, verbose=verbose, **hyperparams) #n_cpu_tf_sess=1 for deterministic CPU results
         model.learn(total_timesteps=timesteps, callback = callback)
         if not save_best_model:
             model.save("models/{}_{}_{}".format(*folder)) #e.g. 0_trpo_hopper
@@ -98,20 +100,25 @@ def evaluate(mode, quantity, env_id, env, algo, n_eval_episodes):
         print('Suboptimal {}. Please try again...'.format(mode))
         sys.exit()
 
-def add_callback_path(mode_algo, mode_callback, folder):
-    if mode_algo=='RL':
-        eval_callback_path = "callbacks/{}/{}_{}_{}".format(mode_callback, *folder)
-    elif mode_algo=='IL':
-        eval_callback_path = "callbacks/{}/{}_{}_{}_gail".format(mode_callback, *folder)
-    make_dir(eval_callback_path)
-    return eval_callback_path
+def add_callback(callback, mode, env, folder, checkpoints, evaluations, save_freq, eval_freq):
+    if mode=='RL':
+        callback_path = "callbacks/{}_{}_{}".format(*folder)
+    elif mode=='IL':
+        callback_path = "callbacks/{}_{}_{}_gail".format(*folder)
+    make_dir(callback_path)
+    if checkpoints:
+        callback.append(CheckpointCallback(save_freq=save_freq, save_path=callback_path, name_prefix='rl_model', verbose=1))
+    if evaluations:
+        callback.append(EvalCallback(env, best_model_save_path=callback_path, log_path=callback_path, eval_freq=eval_freq, verbose=1))
+    return callback
 
 def copy_best_model(mode, folder):
+    print('\n\nChoosing best saved model throughout training, instead of model available at end of training (EvalCallback enabled!)')
     if mode=='RL':
-        best_model_path = "callbacks/evaluations/{}_{}_{}".format(*folder)
+        best_model_path = "callbacks/{}_{}_{}".format(*folder)
         last_model_path = "models/{}_{}_{}".format(*folder)
     elif mode=='IL':
-        best_model_path = "callbacks/evaluations/{}_{}_{}_gail".format(*folder)
+        best_model_path = "callbacks/{}_{}_{}_gail".format(*folder)
         last_model_path = "models/{}_{}_{}_gail".format(*folder)
     copy(os.path.join(best_model_path,'best_model.zip'), "models/")
     if os.path.exists(last_model_path+'.zip'):
@@ -143,7 +150,7 @@ def main():
     folder = [exp_id, env_name.lower(), args.algo.lower()]
     policy_RL = 'MlpPolicy'
     policy_IL = 'MlpPolicy'
-    eval_episodes = 100 # evaluation episodes for trained RL/IL model
+    policy_eval_episodes, expert_traj_gen, expert_traj_use = 100, 100, 10
     save_freq_RL, eval_freq_RL, save_freq_IL, eval_freq_IL, save_best_model, tensorboard_path = 0, 0, 0, 0, False, None # default tensorboard, callback values
 
     # checking arguments for correctness
@@ -157,7 +164,6 @@ def main():
         make_dir(tensorboard_path)
 
     # Adding callback features
-    callback = []
     if (args.eval_callback and args.save_best_model):
         save_best_model = True
 
@@ -165,25 +171,20 @@ def main():
 
     # Train RL algo on env
     if args.train_RL:
-        save_freq_RL, eval_freq_RL = 100*episode_len[env_index], 100*episode_len[env_index]
-        if args.check_callback:
-            check_callback_path = add_callback_path('RL', 'checkpoints', folder)
-            callback.append(CheckpointCallback(save_freq=save_freq_RL, save_path=check_callback_path, name_prefix='rl_model', verbose=1))
-        if args.eval_callback:
-            eval_callback_path = add_callback_path('RL', 'evaluations', folder)
-            callback.append(EvalCallback(env, best_model_save_path=eval_callback_path, log_path=eval_callback_path, eval_freq=eval_freq_RL, verbose=1))
-        train('RL', save_best_model, folder, env, algo, policy_RL, args.seed, timesteps=int(float(args.timesteps_RL)), 
+        if (args.check_callback or args.eval_callback):
+            save_freq_RL, eval_freq_RL = 100*episode_len[env_index], 100*episode_len[env_index]
+            callback = add_callback([], 'RL', env, folder, args.check_callback, args.eval_callback, save_freq_RL, eval_freq_RL)
+        train('RL', save_best_model, folder, env, algo, policy_RL, args.seed, timesteps=int(float(args.timesteps_RL)), verbose=args.verbose,
             tensorboard_log=tensorboard_path, callback = callback, hyperparams=args.hyperparams_RL)
         if (args.eval_callback and args.save_best_model):
-            print('\n\nChoosing best saved model throughout training, instead of model available at end of training (EvalCallback enabled!)')
             copy_best_model('RL', folder)
-        # Evaluate RL model
+
+        # Evaluate RL model - inside because it is not crucial to the problem
         model = (algo_list[algo]).load("models/{}_{}_{}".format(*folder))
-        evaluate('policy', model, env_id, env, algo, eval_episodes)
+        evaluate('policy', model, env_id, env, algo, policy_eval_episodes)
 
     # Generate expert trajectories
     if os.path.exists("models/{}_{}_{}.zip".format(*folder)):
-        expert_traj_gen = 100
         model = (algo_list[algo]).load("models/{}_{}_{}".format(*folder))
         model.set_env(env)
         generate_expert_traj(model, env=env, save_path='experts/{}_{}_{}'.format(*folder), n_episodes=expert_traj_gen) #comment lines 172, 173 in function to not print expert data info
@@ -192,7 +193,6 @@ def main():
 
     #  Load expert dataset
     if os.path.exists('experts/{}_{}_{}.npz'.format(*folder)):
-        expert_traj_use, callback = 10, [] # using only 10 trajectories
         dataset = ExpertDataset(expert_path='experts/{}_{}_{}.npz'.format(*folder), traj_limitation=expert_traj_use, verbose=0)
         expert_data = np.load('experts/{}_{}_{}.npz'.format(*folder), allow_pickle=True)
         evaluate('expert', expert_data, env_id, env, algo, expert_traj_gen)
@@ -202,22 +202,18 @@ def main():
 
     # Train GAIL on expert
     if args.train_IL:
-        save_freq_IL, eval_freq_IL = 300*episode_len[env_index], 300*episode_len[env_index]
-        if args.check_callback:
-            check_callback_path = add_callback_path('IL', 'checkpoints', folder)
-            callback.append(CheckpointCallback(save_freq=save_freq_IL, save_path=check_callback_path, name_prefix='gail_model', verbose=1))
-        if args.eval_callback:
-            eval_callback_path = add_callback_path('IL', 'evaluations', folder)
-            callback.append(EvalCallback(env, best_model_save_path=eval_callback_path, log_path=eval_callback_path, eval_freq=eval_freq_IL, verbose=1))
-        train('IL', save_best_model, folder, env, algo, policy_IL, args.seed, timesteps=int(float(args.timesteps_IL)), 
-        tensorboard_log=tensorboard_path, callback = callback, hyperparams=args.hyperparams_IL, dataset=dataset)
+        if (args.check_callback or args.eval_callback):
+            save_freq_IL, eval_freq_IL = 300*episode_len[env_index], 300*episode_len[env_index]
+            callback = add_callback([], 'IL', env, folder, args.check_callback, args.eval_callback, save_freq_IL, eval_freq_IL)
+        train('IL', save_best_model, folder, env, algo, policy_IL, args.seed, timesteps=int(float(args.timesteps_IL)), verbose=args.verbose,
+            tensorboard_log=tensorboard_path, callback = callback, hyperparams=args.hyperparams_IL, dataset=dataset)
         if (args.eval_callback and args.save_best_model):
             copy_best_model('IL', folder)
 
     # Evaluate GAIL model
     if os.path.exists("models/{}_{}_{}_gail.zip".format(*folder)):
         model = (algo_list['gail']).load("models/{}_{}_{}_gail".format(*folder))
-        evaluate('policy', model, env_id, env, algo, eval_episodes)
+        evaluate('policy', model, env_id, env, algo, policy_eval_episodes)
     else:
         print('GAIL model unavailable. Please train...')
 

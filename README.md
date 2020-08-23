@@ -34,8 +34,8 @@ Usage
 -------------
 ``python imitation_learning_basic.py --seed 42 --env Pendulum-v0 --algo sac -rl -trl 1e5 -il -til 3e5 -best -check -eval -tb -params-RL learning_starts:1000 -params-IL lam:0.9 vf_iters:10``
 
-**Verify reproducibility:** (i) 71/100 successful experts with (mean, std) = (-145.37, 80.41) or (-150.43, 82.06), and 
-ii) 43/100 successful episodes on GAIL policy evaluation with (mean, std) = (-227.61, 147.36) or (-200.78, 109.21)
+**Verify reproducibility:** (i) 71/100 successful experts with (mean, std) = (-145.37, 80.41) or (-152.93, 84.02), and 
+ii) 43/100 or 53/100 successful episodes on GAIL policy evaluation with (mean, std) = (-205.65, 119.37) or (-196.89, 120.58)
 
 Exclude ``-rl`` if expert data is available. For [deterministic evaluation](https://github.com/hill-a/stable-baselines/issues/929#issuecomment-655319112) of expert data, add ``deterministic=True`` [here](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L120). Tuned hyperparameters (HPs) are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for info on sub-folders
 
@@ -55,4 +55,4 @@ Future Work
 4. [Monitor](https://stable-baselines.readthedocs.io/en/master/common/monitor.html): record internal state information during training (episode length, rewards)
 5. (i) Comparing consecutive runs of the experiment, and (ii) passing arguments, HPs to custom environments
 
-This is a work in progress (available [here](https://github.com/prabhasak/reproducibility)), but I hope to release clean code for this once my reasearch is done!
+This is a work in progress (available [here](https://github.com/prabhasak/reproducibility)), but I hope to release clean code once my reasearch is done!
