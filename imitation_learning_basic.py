@@ -40,6 +40,28 @@ env_list = ['Pendulum-v0', 'CartPole-v1', 'LunarLander-v2', 'LunarLanderContinuo
 env_success = [-200, 475, 200, 200, 90, 300, 4800, 3000, 1000, 6000, 3.75, 360, 1000] # OpenAI Gym requirements (Hopper should be 3800)
 episode_len = [200, 500, 400, 400, 999, 1600, 1000, 1000, 1000, 1000, 50, 1000, 100]
 
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--device', help='CPU or GPU', default='cpu', type=str, choices=['cpu', 'gpu'])
+    parser.add_argument('--seed', help='Random generator seed', type=int, default=0)
+    parser.add_argument('--env', help='environment ID', type=str, default='CartPole-v1', choices=env_list)
+    parser.add_argument('--algo', help='RL Algorithm', default='trpo', type=str, required=False, choices=list(algo_list.keys()))
+    parser.add_argument('--exp-id', help='Experiment ID', default=0, type=int)
+
+    parser.add_argument('-rl', '--train-RL', help='To train RL', action='store_true')
+    parser.add_argument('-trl', '--timesteps-RL', help='Number of timesteps for RL', default="1e5", type=str)
+    parser.add_argument('-il', '--train-IL', help='To train GAIL', action='store_true')
+    parser.add_argument('-til', '--timesteps-IL', help='Number of timesteps for GAIL', default="1e6", type=str)
+    parser.add_argument('-best', '--save-best-model', help='For saving best model from EvalCallback instead of last available model', action='store_true')
+    
+    parser.add_argument('-check', '--check-callback', help='For saving models every save_freq steps', action='store_true')
+    parser.add_argument('-eval', '--eval-callback', help='For evaluating model every eval_freq steps', action='store_true')
+    parser.add_argument('-tb', '--tensorboard', help='For Tensorboard logging', action='store_true')
+    parser.add_argument('-params-RL', '--hyperparams-RL', type=str, nargs='+', default={}, action=StoreDict, help='Overwrite hyperparameter (e.g. gamma:0.95 timesteps_per_batch: 2048)')
+    parser.add_argument('-params-IL', '--hyperparams-IL', type=str, nargs='+', default={}, action=StoreDict, help='Overwrite hyperparameter (e.g. gamma:0.95 timesteps_per_batch: 2048)')
+    args = parser.parse_args()
+    return args
+
 def train(mode, save_best_model, folder, env, algo, policy, seed, timesteps, callback = None, tensorboard_log=None, hyperparams=None, dataset=None):
     if mode=='RL':
         model = (algo_list[algo])(policy=policy, env=env, seed=seed, n_cpu_tf_sess=1, tensorboard_log=tensorboard_log, **hyperparams) #n_cpu_tf_sess=1 for deterministic CPU results
@@ -105,28 +127,6 @@ def choose_device(device_name):
         device_name = "/gpu:0"
     else:
         device_name = "/cpu:0"
-
-def get_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--device', help='CPU or GPU', default='cpu', type=str, choices=['cpu', 'gpu'])
-    parser.add_argument('--seed', help='Random generator seed', type=int, default=0)
-    parser.add_argument('--env', help='environment ID', type=str, default='CartPole-v1', choices=env_list)
-    parser.add_argument('--algo', help='RL Algorithm', default='trpo', type=str, required=False, choices=list(algo_list.keys()))
-    parser.add_argument('--exp-id', help='Experiment ID', default=0, type=int)
-
-    parser.add_argument('-rl', '--train-RL', help='To train RL', action='store_true')
-    parser.add_argument('-trl', '--timesteps-RL', help='Number of timesteps for RL', default="1e5", type=str)
-    parser.add_argument('-il', '--train-IL', help='To train GAIL', action='store_true')
-    parser.add_argument('-til', '--timesteps-IL', help='Number of timesteps for GAIL', default="1e6", type=str)
-    parser.add_argument('-best', '--save-best-model', help='For saving best model from EvalCallback instead of last available model', action='store_true')
-    
-    parser.add_argument('-check', '--check-callback', help='For saving models every save_freq steps', action='store_true')
-    parser.add_argument('-eval', '--eval-callback', help='For evaluating model every eval_freq steps', action='store_true')
-    parser.add_argument('-tb', '--tensorboard', help='For Tensorboard logging', action='store_true')
-    parser.add_argument('-params-RL', '--hyperparams-RL', type=str, nargs='+', default={}, action=StoreDict, help='Overwrite hyperparameter (e.g. gamma:0.95 timesteps_per_batch: 2048)')
-    parser.add_argument('-params-IL', '--hyperparams-IL', type=str, nargs='+', default={}, action=StoreDict, help='Overwrite hyperparameter (e.g. gamma:0.95 timesteps_per_batch: 2048)')
-    args = parser.parse_args()
-    return args
 
 def main():
 
