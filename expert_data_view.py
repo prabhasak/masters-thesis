@@ -91,10 +91,10 @@ def main():
 
     print('Here are some stats of the expert... ')
     if args.human_expert and (env_id in ['AirSim-v0']):
-        restrict = True if env_kwargs['restrict'] is None else env_kwargs['restrict']
-        reward = 1000 if env_kwargs['rew_land'] is None else int(env_kwargs['rew_land'])
+        restrict = int(env_kwargs['restrict']) if ('restrict' in env_kwargs) else 1
+        reward = int(env_kwargs['rew_land']) if ('rew_land' in env_kwargs) else 1000
         env_success[-1] = reward
-        expert_data = np.load(os.path.join('expert', 'human', 'expert_data_140_soft_sample_25_norm_{}_restrict_space_{}_success_{}_scale_2_v_0.npz'.format(args.normalize, restrict, reward)), allow_pickle =True)
+        expert_data = np.load(os.path.join('experts', 'human', 'expert_data_140_soft_sample_25_norm_{}_restrict_space_{}_success_{}_scale_2_v_0.npz'.format(int(args.normalize), restrict, reward)), allow_pickle=True)
     else:
         if args.normalize:
             expert_data = np.load('experts/{}_{}_{}_norm_obs.npz'.format(*folder), allow_pickle=True) #Gym envs
