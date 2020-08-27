@@ -1,0 +1,1 @@
+The files contain CustomGymEnvs (modified Gym envs) for rendering expert data in 'experts' fodler. And also the AirSim env.

@@ -11,16 +11,16 @@ binaries: The AirSim binaries for AirSim-v0 (Windows, Linux). "Blocks.exe" must 
 callbacks: save model periodically (checkpoints) and evaluate model periodically (evalautions)
 
 
+custom_env: CustomGymEnvs (modified Gym envs) for rendering expert data in 'experts'
+
+
 experts: collection of .npz files. Note: AirSim-v0 expert data (generated from an optimal SAC policy). 1 -> 'simple' reward, 2 -> 'complex' reward (check __init__ of airsim_env_0.py in airsim_env for more info)
 
 
-logs: log files for airsim experiments (check __init__ of airsim_env_0.py in airsim_env for more info)
+logs: log path for the Monitor wrapper, and for airsim experiments (check __init__ of airsim_env_0.py in airsim_env for more info)
 
 
 models: collection of all trained RL and GAIL models
-
-
-stable_baselines: The "stable_baselines" folder from the Stable Baselines 2.10 repo
 
 
 tensorboard: Tensorboard logs according to env_id. Multiple runs of an experiment will result in multiple logs, please make sure to keep track of the runs (exp_id helps)

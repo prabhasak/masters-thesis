@@ -32,12 +32,20 @@ pip install stable-baselines[mpi] # MPI needed for TRPO, GAIL
 
 Usage
 -------------
-``python imitation_learning_basic.py --seed 42 --env Pendulum-v0 --algo sac -rl -trl 1e5 -il -til 3e5 -best -check -eval -tb -params-RL learning_starts:1000 -params-IL lam:0.9 vf_iters:10``
+1. **Train RL and GAIL:**
 
-**Verify reproducibility:** (i) 71/100 successful experts with (mean, std) = (-145.37, 80.41) or (-152.93, 84.02), and 
-ii) 43/100 or 53/100 successful episodes on GAIL policy evaluation with (mean, std) = (-205.65, 119.37) or (-196.89, 120.58)
+``python train.py --seed 42 --env Pendulum-v0 --algo sac -rl -trl 1e5 -il -til 3e5 -best -check -eval -tb -params-RL learning_starts:1000 -params-IL lam:0.9 vf_iters:10``
+
+Verify reproducibility: (i) 70/100 successful experts with (mean, std) = (-152.93, 84.02) or (-149.43, 79.70), and 
+ii) 54/100 or 53/100 successful episodes on GAIL policy evaluation with (mean, std) = (-193.65, 105.68) or (-216.51, 132.16)
 
 Exclude ``-rl`` if expert data is available. For [deterministic evaluation](https://github.com/hill-a/stable-baselines/issues/929#issuecomment-655319112) of expert data, add ``deterministic=True`` [here](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L120). Tuned hyperparameters (HPs) are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for info on sub-folders
+
+2. **Check expert data:** ``python expert_data_view.py --seed 42 --env Pendulum-v0 --algo sac --episodic`` (if ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program)
+
+3. **Render expert data: (limited GymEnvs)** ``python expert_data_render.py --seed 42 --env My-Pendulum-v0 --algo sac --render`` (if ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program)
+
+4. **Model policy evaluation and rendering:** ``python model_render.py --seed 42 --env Pendulum-v0 --algo sac --mode rl -policy --test``
 
 <!-- To hide expert data info (keys, shape), you will have to comment [this](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L173) out -->
 
