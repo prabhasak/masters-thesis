@@ -37,7 +37,7 @@ Usage
 ``python train.py --seed 42 --env Pendulum-v0 --algo sac -rl -trl 1e5 -il -til 3e5 -best -check -eval -tb -params-RL learning_starts:1000 -params-IL lam:0.9 vf_iters:10``
 
 Verify reproducibility: (i) 70/100 successful experts with (mean, std) = (-152.93, 84.02) or (-149.43, 79.70), and 
-ii) 54/100 or 53/100 successful episodes on GAIL policy evaluation with (mean, std) = (-193.65, 105.68) or (-216.51, 132.16)
+ii) 54/100 or 43/100 successful episodes on GAIL policy evaluation with (mean, std) = (-193.65, 105.68) or (-216.51, 132.16)
 
 Exclude ``-rl`` if expert data is available. For [deterministic evaluation](https://github.com/hill-a/stable-baselines/issues/929#issuecomment-655319112) of expert data, add ``deterministic=True`` [here](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L120). Tuned hyperparameters (HPs) are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for info on sub-folders
 
