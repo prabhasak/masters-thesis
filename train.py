@@ -1,12 +1,13 @@
 """Benchmark reinforcement learning (RL) and imitation Learning (GAIL) algorithms from Stable Baselines 2.10.
 Author: Prabhasa Kalkur
 
-- Note 1.0: choose {env, RL algo, training times, hyperparameters, } as cmd line arguments
-- Note 1.1: please choose appropriate policy for the RL/IL algorithms (lines 157, 158)       
+- Note 1.0: choose {env, RL algo, training times, hyperparameters, ...} as cmd line arguments
+            add CustomEnv to env_list (and associated parameters) and CustomAlgo to algo_list(lines  46-51)
+- Note 1.1: please choose appropriate policy for the RL/IL algorithms (lines 163, 164)       
 - Note 1.2: changeable numbers in the program:
-            number of episodes used for policy evaluation after training = 100 (line 159)
-            number of expert trajectories generated & used = 100, 10 (line 159)
-            callback model saving and evaluation = every 100, 300 episodes for RL, IL (lines 184, 215)
+            number of episodes used for policy evaluation after training = 100 (line 165)
+            number of expert trajectories generated & used = 100, 10 (line 165)
+            callback model saving and evaluation = every 100, 300 episodes for RL, IL (lines 190, 222)
 - Note 2: Things you can add on top: Multiprocessing, Monitor, VecNormalize, HP tuning, pass CustomEnv kwargs
 """
 
