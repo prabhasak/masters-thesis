@@ -1,10 +1,10 @@
-Learning from demonstrations: An Imitation Learning benchmark
+Learning from demonstrations: An Imitation Learning benchmark for Stable Baselines 2.10
 ==========================
 **Objective:** Benchmark reinforcement learning (RL) and imitation Learning ([GAIL](https://arxiv.org/pdf/1606.03476.pdf)) algorithms from [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/index.html) on [OpenAI Gym](https://gym.openai.com/) and [AirSim](https://microsoft.github.io/AirSim/) environments. To be more specific, the goal of this codebase is to:
 1. Train a GAIL model to <ins>imitate</ins> expert demonstrations <ins>generated</ins> from a trained RL model
 2. Integrate several cool features provided by Stable Baselines (to the best of my knowledge, uncharted territory!)
 
-**Idea**: Pick your favourite [env, algo] pair -> **train RL** -> **rollout expert data** -> **train GAIL**
+**Idea**: Pick your favourite [task, RL algo] pair -> **train RL** -> **rollout expert data** -> **train GAIL** -> **verify imitation**
 
 **Framework, langauge, OS:** Tensorflow 1.14, Python 3.7, Windows 10
 
@@ -27,7 +27,7 @@ pip install stable-baselines[mpi] # MPI needed for TRPO, GAIL
 
 **For CustomEnvs and CustomAlgos:** [Register](https://medium.com/@apoddar573/making-your-own-custom-environment-in-gym-c3b65ff8cdaa) your CustomEnv on Gym ([examples](https://github.com/openai/gym/blob/master/gym/envs/__init__.py)), and add your custom env and/or algorithm details to the code. You can use the ``"airsim_env"`` folder for reference
 
-**AirSim:** Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) custom binary files, modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my thesis available [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing). You will have to run them _before_ running the code
+**For AirSim:** Some resources to [generate](https://microsoft.github.io/AirSim/build_windows/) custom binary files, modify [settings](https://microsoft.github.io/AirSim/settings/). Binaries for my thesis available [here](https://drive.google.com/drive/folders/1PFYkOlqb0DLcVoSsaSNGZVJif1VGeGuK?usp=sharing). You will have to run them _before_ running the code
 
 
 Usage
