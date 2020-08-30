@@ -41,20 +41,20 @@ ii) 54/100 or 43/100 successful episodes on GAIL policy evaluation with (mean, s
 
 Exclude ``-rl`` if expert data is available. For [deterministic evaluation](https://github.com/hill-a/stable-baselines/issues/929#issuecomment-655319112) of expert data, add ``deterministic=True`` [here](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L120). Tuned hyperparameters (HPs) are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for info on sub-folders
 
-2. **Check expert data:** ``python expert_data_view.py --seed 42 --env Pendulum-v0 --algo sac --episodic``
+2. **Check expert data:** ``python expert_data_view.py --seed 42 --env Pendulum-v0 --algo sac --episodic``\
 If ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program
 
-3. **Render expert data:** ``python expert_data_render.py --seed 42 --env My-Pendulum-v0 --algo sac --render``
+3. **Render expert data:** ``python expert_data_render.py --seed 42 --env My-Pendulum-v0 --algo sac --render``\
 For limited Gym envs and CustomEnvs only. If ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program
 
-4. **Evaluate and render model:** ``python model_render.py --seed 42 --env Pendulum-v0 --algo sac --mode rl -policy --test``
+4. **Evaluate and render model:** ``python model_render.py --seed 42 --env Pendulum-v0 --algo sac --mode rl -policy --test``\
 Verify optimality of trained RL model and imitation accuracy of trained GAIL model
 
 <!-- To hide expert data info (keys, shape), you will have to comment [this](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L173) out -->
 
 Features
 -------------
-The codebase contains **[Tensorboard](https://stable-baselines.readthedocs.io/en/master/guide/tensorboard.html)** and **[Callback](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html)** features, which help monitor performance during training. You can enable them with ``-tb`` and ``-check,-eval`` respectively. Usage: ``tensorboard --logdir "/your/file/path"``. Callbacks are for:
+The codebase contains **[Tensorboard](https://stable-baselines.readthedocs.io/en/master/guide/tensorboard.html)** and **[Callback](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html)** features, which help monitor performance during training. You can enable them with ``-tb`` and ``-check,-eval`` respectively. Usage: ``tensorboard --logdir "/your/file/path"``. Callbacks for:
 1. [Saving](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html#checkpointcallback) the model periodically (useful for [continual learning](https://stable-baselines.readthedocs.io/en/master/guide/examples.html#continual-learning) and to resume training)
 2. [Evaluating](https://stable-baselines.readthedocs.io/en/master/guide/callbacks.html#evalcallback) the model periodically and saves the best model throughout training (you can choose to save and evaluate just the best model found throughout training with ``-best``)
 
