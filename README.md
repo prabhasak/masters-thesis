@@ -8,11 +8,11 @@ Learning from demonstrations: An Imitation Learning benchmark
 
 **Framework, langauge, OS:** Tensorflow 1.14, Python 3.7, Windows 10
 
-**Thesis problem statement:** Imitate Autonomous UAV landing purely from human demonstrations. We train GAIL on a custom environment built on [Microsoft AirSim 2.0](https://microsoft.github.io/AirSim/). Short video [here](https://www.youtube.com/watch?v=oj4y8GOq4gk&feature=youtu.be)
+**Thesis problem statement:** Imitate Autonomous UAV maneuver and landing purely from human demonstrations. We train GAIL on a custom environment built on [Microsoft AirSim 2.0](https://microsoft.github.io/AirSim/). Short video [here](https://www.youtube.com/watch?v=oj4y8GOq4gk&feature=youtu.be)
 
 Prerequisites
 -------------
-The implementation uses [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/guide/install.html). Inlcuded 'utils.py' from [here](https://github.com/araffin/rl-baselines-zoo) to save hyperparameters as a Dict
+The implementation uses [Stable Baselines 2.10](https://stable-baselines.readthedocs.io/en/master/guide/install.html). Inlcuded 'utils.py' from [here](https://github.com/araffin/rl-baselines-zoo) to save hyperparameters as a Dict object
 
 ```
 # create virtual environment (optional)
@@ -41,11 +41,14 @@ ii) 54/100 or 43/100 successful episodes on GAIL policy evaluation with (mean, s
 
 Exclude ``-rl`` if expert data is available. For [deterministic evaluation](https://github.com/hill-a/stable-baselines/issues/929#issuecomment-655319112) of expert data, add ``deterministic=True`` [here](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L120). Tuned hyperparameters (HPs) are available on [Baselines Zoo](https://github.com/araffin/rl-baselines-zoo/tree/master/hyperparams). Please read ``description.txt`` for info on sub-folders
 
-2. **Check expert data:** ``python expert_data_view.py --seed 42 --env Pendulum-v0 --algo sac --episodic`` (note: if ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program
+2. **Check expert data:** ``python expert_data_view.py --seed 42 --env Pendulum-v0 --algo sac --episodic``
+If ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program
 
-3. **Render expert data:** ``python expert_data_render.py --seed 42 --env My-Pendulum-v0 --algo sac --render`` (note: for limited Gym envs and CustomEnvs only, if ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program)
+3. **Render expert data:** ``python expert_data_render.py --seed 42 --env My-Pendulum-v0 --algo sac --render``
+For limited Gym envs and CustomEnvs only. If ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program
 
-4. **Policy evaluation and render trained model:** ``python model_render.py --seed 42 --env Pendulum-v0 --algo sac --mode rl -policy --test`` (useful for separately verifying optimality of trained RL model and imitation accuracy of trained GAIL model)
+4. **Evaluate and render model:** ``python model_render.py --seed 42 --env Pendulum-v0 --algo sac --mode rl -policy --test``
+Verify optimality of trained RL model and imitation accuracy of trained GAIL model
 
 <!-- To hide expert data info (keys, shape), you will have to comment [this](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L173) out -->
 
