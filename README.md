@@ -45,7 +45,7 @@ Exclude ``-rl`` if expert data is available. For [deterministic evaluation](http
 If ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program
 
 3. **Render expert data:** ``python expert_data_render.py --seed 42 --env My-Pendulum-v0 --algo sac --render``\
-For limited envs in "custom_env" folder. If ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program
+For envs in "custom_env" folder. If ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program
 
 4. **Evaluate, render model:** ``python model_render.py --seed 42 --env Pendulum-v0 --algo sac --mode rl -policy --test``\
 Verify optimality of trained RL model and imitation accuracy of trained GAIL model
