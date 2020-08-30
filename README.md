@@ -47,8 +47,8 @@ If ``--episodic``, use 'c' to go through each episode, and 'q' to stop the progr
 3. **Render expert data:** ``python expert_data_render.py --seed 42 --env My-Pendulum-v0 --algo sac --render``\
 For envs in "custom_env" folder. If ``--episodic``, use 'c' to go through each episode, and 'q' to stop the program
 
-4. **Evaluate, render model:** ``python model_render.py --seed 42 --env Pendulum-v0 --algo sac --mode rl -policy --test``\
-Verify optimality of trained RL model and imitation accuracy of trained GAIL model
+4. **Evaluate, render model:** ``python model_render.py --seed 42 --env Pendulum-v0 --algo sac --mode rl -policy``\
+Verify optimality of trained RL model and imitation accuracy of trained GAIL model. Include ``--test`` to render
 
 <!-- To hide expert data info (keys, shape), you will have to comment [this](https://github.com/hill-a/stable-baselines/blob/master/stable_baselines/gail/dataset/record_expert.py#L173) out -->
 
